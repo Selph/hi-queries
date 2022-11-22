@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flask app</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  </head>
+  <body>
+    <header>
+      <h1 class="headertext">HÍ Query Tól</h1>
+    </header>
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+      <div class="container">
+        <h1 class="logo">Spurðu spurningu</h1>
+        <form class="form" action="" method="get">
+          <input class="input" type="text" name="question">
+          <input class="button" type="submit" value="Spyrja">
+        </form>
+        <h3 class="answer">{{ answer }}</h3>
+      </div>
+    </div>
+  </body>
+</html>
