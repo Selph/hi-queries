@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, escape
+import os
 
 import util.tokenizer
  
@@ -27,5 +28,6 @@ def answer_algorithm(question):
     return tokens
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080, debug=True)
+    #app.run(host="0.0.0.0", port=8080, debug=True)
+    app.run(debug=True, port=os.getenv("PORT", default=5000))
     
