@@ -12,12 +12,82 @@
       {% block content %}
       {% endblock %}
       <div class="container">
+        {% if lemmas == "" %}
+        <p>Mögulegar spurningar: Hvar er 'bygging', hvenær er 'bygging' opin, spurningar tengdar hámu, spurningar tengdar lokaprófum</p>
+        {% endif %}
         <h1 class="logo">Spurðu spurningu</h1>
         <form class="form" action="" method="get">
           <input class="input" type="text" name="question">
           <input class="button" type="submit" value="Spyrja">
         </form>
-        <h3 class="answer">{{ answer }}</h3>
+        {% if answer.hours %}
+          <div class="answerblock">
+            <h3 class="answerhead">{{ answer.head }}</h3>
+            <p class="answerp">{{ answer.weekdays }}</p>
+            <p class="answerp">{{ answer.sat }}</p>
+            <p class="answerp">{{ answer.sun }}</p>
+            <a href="{{ '/?question=hvar+' + answer.name }}">Staðsetning</a>
+            <a href="{{ answer.url}} ">Frekari upplýsingar</a>
+          </div>
+        {% endif %}
+        {% if answer.location %}
+          <div class="answerblock">
+            <h3 class="answerhead">{{ answer.head }}</h3>
+            <p class="answerp">{{ answer.address }}</p>
+            <a href="{{ '/?question=hvenær+' + answer.name }}">Opnunartímar</a>
+            <a href="{{ answer.url }} ">Frekari upplýsingar</a>
+          </div>
+        {% endif %}
+        {% if answer.exam %}
+          <div class="answerblock">
+            <h3 class="answerhead">{{ answer.head }}</h3>
+            <p class="answerp">{{ answer.date }}</p>
+          </div>
+        {% endif %}
+        {% if answer.infohama %}
+          <div class="hamainfo">
+            <h3 class="answerhead">{{ answer.head }}</h3>
+            <p class="answerp">{{ answer.p1 }}</p>
+            <p class="answerp">{{ answer.p2 }}</p>
+            <p class="answerp">{{ answer.p3 }}</p>
+            <p class="answerp">{{ answer.p4 }}</p>
+          </div>
+          <a href="/?question=háma">Hámur</a>
+        {% endif %}
+        {% if answer.hama %}
+          <h3 class="answerhead">{{ answer.head }}</h3>
+          <div class="hamadiv">
+            {% for hama in answer.hamas %}
+              <div class="hamainner">
+                <h4 class="answerp">{{ hama.name }}</h4>
+                <a href="{{ '/?question=hamadetail+' + hama.building }}">Nánar</a>
+              </div>
+            {% endfor %}
+          </div>
+          <a href="/?question=infohama">Upplýsingar um hámu</a>
+        {% endif %}
+        {% if answer.hamadetail %}
+          <div class="hama">
+            <h3 class="answerp">{{ answer.head }}</h3>
+            <p class="answerp">Virkir dagar: {{ answer.weekdays }}</p>
+            <p class="answerp">Laugardagar: {{ answer.sat }}</p>
+            <p class="answerp">Sunnudagar: {{ answer.sun }}</p>
+            <h4 class="answerp">Staðsetning: </h4>
+            <p class="answerp">{{ answer.address }}</p>
+            <a href="/?question=háma">Fleiri hámur</a>
+          </div>
+          <a href="/?question=infohama">Upplýsingar um hámu</a>
+        {% endif %}
+        {% if answer.nothing %}
+          <p>{{ answer.head }}</p>
+        {% endif %}
+      </div>
+      <hr>
+      <div class="output">
+        <div class="hr1"></div>
+        {% if lemmas != "" %}
+        <p class="lemmas">Lemmaðar tokens: {{ lemmas }}</p>
+        {% endif %}
       </div>
     </div>
   </body>

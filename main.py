@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, escape
 import os
+import pandas as pd
 
-import util.tokenizer
+import util.tokenizer as tokenizer
+import logic.logic as logic
  
 app = Flask(__name__)
 
@@ -9,11 +11,11 @@ app = Flask(__name__)
 def index():
     question = str(escape(request.args.get("question", "")))
     if question:
-        answer = answer_from(question)
+        lemmas, answer = answer_from(question)
     else:
-        answer = ""
+        lemmas, answer = "", ""
     return (
-        render_template('page.html', answer=answer)
+        render_template('page.html', lemmas=lemmas, answer=answer)
     )
 
 def answer_from(question):
@@ -24,8 +26,9 @@ def answer_from(question):
         return "Ég veit ekki svarið... reyndu aftur!"
     
 def answer_algorithm(question):
-    tokens = util.tokenizer.question_processing2(question)
-    return tokens
+    lemmas = tokenizer.question_processing2(question)
+    answer = logic.filter_logic(lemmas)
+    return lemmas, answer
 
 if __name__ == "__main__":
     #app.run(host="0.0.0.0", port=8080, debug=True)

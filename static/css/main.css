@@ -49,11 +49,10 @@ body {
   }
   h3 {
     font-size: 1.7em;
-    font-weight: 100;
+    font-weight: 150;
     margin-top: 30px;
     text-align: center;
-    letter-spacing: -1px;
-    color: #999;
+    color: rgb(15, 14, 14);
   }
   .menu {
     float: right;
@@ -76,13 +75,35 @@ body {
   }
 
   .input {
-    width: 50vw;
-    margin-bottom: 20px;
+    width: 400px;
+    margin: auto auto 20px;
   }
 
   .button {
     width: 100px;
     text-align: center;
     margin: auto;
+  }
+
+  .hamadiv {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100vw;
+  }
+
+  .hamainner {
+    flex-grow: 1;
+    width: 33%;
+    height: 100px;
+  }
+
+  .hamainfo {
+    width: 50%;
+    margin: auto auto 20px;
+  }
+
+  .hr1 {
+    height: 0;
+    border-bottom: 0px solid black;
   }
   
