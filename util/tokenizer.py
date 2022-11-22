@@ -32,7 +32,10 @@ def question_processing2(question):
     for token in joseph:
         if token != ',' and token != '?' and token != '!' and token not in stop_words:
             w, m = b.lookup(token)
-            tokens_normalized.append(m[0].ord)
+            if len(m) > 0:
+                tokens_normalized.append(m[0].ord)
+            else:
+                tokens_normalized.append(token)
     res = []
     # None birtist for some reason, tekið út
     for val in tokens_normalized:
