@@ -12,18 +12,24 @@ Notast var við `Flask` til að gera vefviðmót og `Railway.app` til að hýsa 
 
 `spacy`, `re` til að tóka
 
-`islenska` til að gera íslenskar lemmanir
+`islenska` til að gera íslenskar lemmanir, frá BÍN
 
 `pandas` til að vinna með csv gögn
 
 `numpy` til að vinna með fylki
 
 
-## Uppsetning
+## Hvað getur appið gert?
 
 Appið tekur við spurningum frá notanda og skilar svörum. Appið getur svarað spurningum sem snúa að:
 
 - Staðsetningum háskólabygginga
 - Opnunartímum háskólabygginga
 - Tímasetningu lokaprófa
-- Upplýsingum um hámu
+- Hámu
+- Nemendaþjónustum sviða
+- Stúdentaráði HÍ
+- Tölvuver UTS
+- Náms- og Starfsráðgjöf HÍ
+- Stjórn Nörd
+- Vefmiðlum Nörd (facebook, discord, instagram)
