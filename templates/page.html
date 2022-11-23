@@ -12,9 +12,6 @@
       {% block content %}
       {% endblock %}
       <div class="container">
-        {% if lemmas == "" %}
-        <p>Mögulegar spurningar: Hvar er 'bygging', hvenær er 'bygging' opin, spurningar tengdar hámu, spurningar tengdar lokaprófum</p>
-        {% endif %}
         <h1 class="logo">Spurðu spurningu</h1>
         <form class="form" action="" method="get">
           <input class="input" type="text" name="question">
@@ -181,7 +178,6 @@
         {% if lemmas != "" %}
         <p class="lemmas">Lemmaðar tokens: {{ lemmas }}</p>
         {% endif %}
-        {{ answer }}
       </div>
     </div>
   </body>
