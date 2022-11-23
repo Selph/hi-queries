@@ -1,22 +1,31 @@
-import pandas as pd
-import os
+import util.dataprep as d
 import numpy as np
 
 def find_hama(question):
-    df = dataprep()
+    # Gives information about specific Háma
     
+    # Get dataframe
+    cols = ['building', 'name', 'opening week', 'opening sat', 'opening sun', 'address']
+    df = d.dataprep('hama.csv', cols)
+    
+    # Get reference column
     buildings = df["building"].to_numpy()
-    id = 0
+    
+    # Have to specify certain lemmatizations
     if 'hama-oddi' in question:
         id = id = np.where(buildings == 'hamaoddi')[0][0]
     if 'eir-berg' in question:
         id = id = np.where(buildings == 'hamaeirberg')[0][0]
     if 'hama-salat-bar' in question:
         id = id = np.where(buildings == 'hamasalatbar')[0][0]
+        
+    # Find correct answer row
+    id = 0
     for token in question:
         if len(np.where(buildings == token)[0]) > 0:
             id = np.where(buildings == token)[0][0]
 
+    # Information package
     data = {
         'hama': False,
         'hamadetail': True, 
@@ -28,13 +37,3 @@ def find_hama(question):
         }
     
     return data
-
-
-def dataprep():
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    data_file = os.path.join(basedir, '../static/sheets/hama.csv')
-    
-    cols = ['building', 'name', 'opening week', 'opening sat', 'opening sun', 'address']
-    df = pd.read_csv(data_file, names=cols, header=0)
-    
-    return df

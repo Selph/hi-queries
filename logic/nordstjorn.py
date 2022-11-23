@@ -1,18 +1,23 @@
-import pandas as pd
-import os
+import util.dataprep as d
 import numpy as np
 
 def stjorn(question):
-    df = dataprep()
+    # Gives information about Nörd management
+    
+    # Get dataframe
+    cols = ['name','role','slug']
+    df = d.dataprep('nördstjórn.csv', cols)
 
+    # Get reference column
     slug = df["slug"].to_numpy()
         
+    # Find correct answer row
     id = ''
-    
     for token in question:
         if len(np.where(slug == token)[0]) > 0:
             id = np.where(slug == token)[0][0]
         
+    # No role specified, return management list
     if id == '':
         data = []
         i = 0
@@ -27,7 +32,8 @@ def stjorn(question):
             'stjorn2': True,
             'team': data
         }
-        
+    
+    # Information package
     data = {
         'stjorn': True,
         'name': df.iloc[id]['name'],
@@ -35,13 +41,3 @@ def stjorn(question):
         }
     
     return data
-
-
-def dataprep():
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    data_file = os.path.join(basedir, '../static/sheets/nördstjórn.csv')
-    
-    cols = ['name','role','slug']
-    df = pd.read_csv(data_file, names=cols, header=0)
-    
-    return df

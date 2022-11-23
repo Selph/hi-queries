@@ -1,18 +1,23 @@
-import pandas as pd
-import os
+import util.dataprep as d
 import numpy as np
 
 def midlar(question):
-    df = dataprep()
+    # Gives information about Nörd social media
+    
+    # Get dataframe
+    cols = ['media','link']
+    df = d.dataprep('nördmiðlar.csv', cols)
 
+    # Get reference column
     media = df["media"].to_numpy()
         
+    # Find correct answer row
     id = ''
-    
     for token in question:
         if len(np.where(media == token)[0]) > 0:
             id = np.where(media == token)[0][0]
-        
+    
+    # No media specified, return list of media
     if id == '':
         data = []
         i = 0
@@ -27,7 +32,8 @@ def midlar(question):
             'nordmedialist': True,
             'medias': data
         }
-        
+    
+    # Information package
     data = {
         'nordmedia': True,
         'media': df.iloc[id]['media'],
@@ -35,13 +41,3 @@ def midlar(question):
         }
     
     return data
-
-
-def dataprep():
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    data_file = os.path.join(basedir, '../static/sheets/nördmiðlar.csv')
-    
-    cols = ['media','link']
-    df = pd.read_csv(data_file, names=cols, header=0)
-    
-    return df

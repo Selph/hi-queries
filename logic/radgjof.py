@@ -1,10 +1,14 @@
-import pandas as pd
-import os
+import util.dataprep as d
 import numpy as np
 
 def radgjof():
-    df = dataprep()
+    # Gives information about HÍ support desks
+    
+    # Get dataframe
+    cols = ['slug','name','phone','opening','email','address','url']
+    df = d.dataprep('radgjof.csv', cols)
 
+    # Generic information package
     data = {
         'radgjof': True,
         'head': df.iloc[1]['name'],
@@ -16,13 +20,3 @@ def radgjof():
         }
     
     return data
-
-
-def dataprep():
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    data_file = os.path.join(basedir, '../static/sheets/radgjof.csv')
-    
-    cols = ['slug','name','phone','opening','email','address','url']
-    df = pd.read_csv(data_file, names=cols, header=0)
-    
-    return df

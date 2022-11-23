@@ -1,4 +1,5 @@
 def infohama():
+    # Standard answer package, general information about Háma
     return {
         'infohama': True,
         'head': 'Upplýsingar um Hámu',

@@ -1,10 +1,14 @@
-import pandas as pd
-import os
+import util.dataprep as d
 import numpy as np
 
 def tolvuver():
-    df = dataprep()
+    # Gives information about computer rooms in HÍ
     
+    # Get dataframe
+    cols = ['slug', 'name', 'address', 'building']
+    df = d.dataprep('tolvuver.csv', cols)
+    
+    # Generate list of computer rooms
     tolvuver = []
     i = 0
     for row in df.iterrows():
@@ -16,6 +20,7 @@ def tolvuver():
             })
         i = i + 1
 
+    # Information package
     data = {
         'tolvuver': True, 
         'head': 'Hér er listi yfir tölvuver',
@@ -23,13 +28,3 @@ def tolvuver():
         }
 
     return data
-
-
-def dataprep():
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    data_file = os.path.join(basedir, '../static/sheets/tolvuver.csv')
-    
-    cols = ['slug', 'name', 'address', 'building']
-    df = pd.read_csv(data_file, names=cols, header=0)
-    
-    return df

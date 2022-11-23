@@ -4,14 +4,9 @@ import spacy
 
 from islenska import Bin
 
-b = Bin()
-
-nlp = spacy.load("en_core_web_sm")
-
-stop_words_path = os.getcwd()+'/txts/stop_words_english.txt'
-stop_words = open(stop_words_path, 'r')
-
 def custom_tokenizer(x):
+    # Tokenizes strings (from assignment 3)
+    
     pattern = re.compile(r'(?x) \w\.[áí]\s\w\. | (?:\w+\.(?!$))+ | \w+(?:[-\']\w*)* | [\.,?!]')
     t_base = pattern.findall(x)
     t = []
@@ -24,10 +19,20 @@ def custom_tokenizer(x):
     return t
 
 def question_processing2(question):
-    # Lemmar og tekur út stopporð ásamt ?, ! og kommu
+    # Lemmatizes and removes stopwords along with ?, ! and ,
+    
+    # Prepare modules and files
+    b = Bin()
+    nlp = spacy.load("en_core_web_sm")
     doc = nlp(question)
+    stop_words_path = os.getcwd()+'/txts/stop_words_english.txt'
+    stop_words = open(stop_words_path, 'r')
+    
+    # Tokenize
     jonathan = " ".join([token.lemma_ for token in doc])
     joseph = custom_tokenizer(jonathan)
+    
+    # Remove stop words and lemmatize
     tokens_normalized = []
     for token in joseph:
         if token != ',' and token != '?' and token != '!' and token not in stop_words:
@@ -37,8 +42,10 @@ def question_processing2(question):
             else:
                 tokens_normalized.append(token)
     res = []
-    # None birtist for some reason, tekið út
+    
+    # None shows up for some reason, taken out
     for val in tokens_normalized:
         if val != None :
             res.append(val)
+            
     return tokens_normalized

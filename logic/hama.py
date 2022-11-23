@@ -1,10 +1,13 @@
-import pandas as pd
-import os
-import numpy as np
+import util.dataprep as d
 
 def find_hama(question):
-    df = dataprep()
+    # Gives a list of Hámas
     
+    # Get dataframe
+    cols = ['building', 'name', 'opening week', 'opening sat', 'opening sun', 'address']
+    df = d.dataprep('hama.csv', cols)
+    
+    # Generate list
     hamas = []
     i = 0
     for row in df.iterrows():
@@ -14,19 +17,11 @@ def find_hama(question):
             })
         i = i + 1
 
+    # Information package
     data = {
         'hama': True, 
         'head': 'Opnunartímar og staðsetningar Hámu:',
         'hamas': hamas
         }
+    
     return data
-
-
-def dataprep():
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    data_file = os.path.join(basedir, '../static/sheets/hama.csv')
-    
-    cols = ['building', 'name', 'opening week', 'opening sat', 'opening sun', 'address']
-    df = pd.read_csv(data_file, names=cols, header=0)
-    
-    return df

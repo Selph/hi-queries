@@ -1,12 +1,17 @@
-import pandas as pd
-import os
+import util.dataprep as d
 import numpy as np
 
 def nemendathjon(question):
-    df = dataprep()
+    # Gives information about Nemendaþjónusta and SHÍ
+    
+    # Get dataframe
+    cols = ['slug','name','phone','building','email','url']
+    df = d.dataprep('nemendathjon.csv', cols)
 
+    # Get reference column
     slug = df["slug"].to_numpy()
 
+    # Matching lemmatizations with sheet
     if 'hugvísindasvið' in question or 'hugur' in question:
         question.append("hugs")
     if 'félagsvísindasvið' in question:
@@ -18,17 +23,19 @@ def nemendathjon(question):
     if 'stúdentaráð' in question:
         question.append("shi")
         
+    # Find correct answer row
     id = ''
-    
     for token in question:
         if len(np.where(slug == token)[0]) > 0:
             id = np.where(slug == token)[0][0]
-        
+    
+    # Error
     if id == '':
         return {
             'nemendathjon2': True
         }
         
+    # Information Package
     data = {
         'nemendathjon': True,
         'head': df.iloc[id]['name'],
@@ -40,13 +47,3 @@ def nemendathjon(question):
         }
     
     return data
-
-
-def dataprep():
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    data_file = os.path.join(basedir, '../static/sheets/nemendathjon.csv')
-    
-    cols = ['slug','name','phone','building','email','url']
-    df = pd.read_csv(data_file, names=cols, header=0)
-    
-    return df

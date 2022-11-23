@@ -1,14 +1,19 @@
-import pandas as pd
-import os
+import util.dataprep as d
 import numpy as np
 
 from flask import request
 
 def find_hours(question):
-    df = dataprep()
+    # Gives opening hours of HÍ buildings
     
+    # Get dataframe
+    cols = ['building', 'name', 'opening week', 'opening sat', 'opening sun', 'address', 'url']
+    df = d.dataprep('locations.csv', cols)
+    
+    # Get reference column
     buildings = df["building"].to_numpy()
-    id = ''
+    
+    # Have to specify certain lemmatizations
     if 'vr' in question:
         if 'iii' in question or '3' in question:
             question.append("vr3")
@@ -16,11 +21,18 @@ def find_hours(question):
             question.append("vr2")
         if 'I' in question or '1' in question:
             question.append("vr1")
+    
+    # Find correct answer row
+    id = ''
     for token in question:
         if len(np.where(buildings == token)[0]) > 0:
             id = np.where(buildings == token)[0][0]
+            
+    # Error
     if id == '':
         return 'Veit ekki hvenær tiltæk bygging opnar eða bygging ekki á lista/rangt skrifuð'
+    
+    # Information package
     data = {'hours': True,
             'name': df.iloc[id]['building'],
             'head': 'Byggingin ' + df.iloc[id]['name'] + ' er opin á eftirfarandi tímum:',
@@ -30,14 +42,5 @@ def find_hours(question):
             'address': df.iloc[id]['address'],
             'url': df.iloc[id]['url']
             }
+    
     return data
-
-
-def dataprep():
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    data_file = os.path.join(basedir, '../static/sheets/locations.csv')
-    
-    cols = ['building', 'name', 'opening week', 'opening sat', 'opening sun', 'address', 'url']
-    df = pd.read_csv(data_file, names=cols, header=0)
-    
-    return df

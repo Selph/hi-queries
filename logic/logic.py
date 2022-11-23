@@ -11,6 +11,8 @@ import logic.nordstjorn as nordstjorn
 import logic.nordmidlar as nordmidlar
 
 def filter_logic(question):
+    # Filters keywords and runs appropriate answer logic
+    
     if 'nörd' in question:
         if 'forseti' in question or 'ritari' in question or 'gjaldkeri' in question or 'skemmtana-stjóra' in question or 'samfélagsmiðill' in question or 'hagsmuna-fulltrúi' in question or 'nýnema-fulltrúi' in question or 'stjórn' in question:
             return nordstjorn.stjorn(question)
@@ -34,5 +36,7 @@ def filter_logic(question):
         return openinghours.find_hours(question)
     if 'hvar' in question:
         return location.find_location(question)
+    
+    # Error
     if len(question) > 0:
         return { 'nothing': True, 'head': 'Skildi ekki spurninguna... Prófaðu að nota spurnarfornöfn t.d. hvar/hvenær' }
