@@ -105,5 +105,10 @@ body {
   .hr1 {
     height: 0;
     border-bottom: 0px solid black;
+    margin-top: 30px;
+    margin-bottom: 30px;
   }
   
+  .break {
+    height: 10px;
+  }

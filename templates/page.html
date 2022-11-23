@@ -27,6 +27,7 @@
             <p class="answerp">{{ answer.sat }}</p>
             <p class="answerp">{{ answer.sun }}</p>
             <a href="{{ '/?question=hvar+' + answer.name }}">Staðsetning</a>
+            <div class="break"></div>
             <a href="{{ answer.url}} ">Frekari upplýsingar</a>
           </div>
         {% endif %}
@@ -35,6 +36,7 @@
             <h3 class="answerhead">{{ answer.head }}</h3>
             <p class="answerp">{{ answer.address }}</p>
             <a href="{{ '/?question=hvenær+' + answer.name }}">Opnunartímar</a>
+            <div class="break"></div>
             <a href="{{ answer.url }} ">Frekari upplýsingar</a>
           </div>
         {% endif %}
@@ -78,6 +80,97 @@
           </div>
           <a href="/?question=infohama">Upplýsingar um hámu</a>
         {% endif %}
+        {% if answer.tolvuver %}
+          <h3 class="answerhead">{{ answer.head }}</h3>
+          <div class="hamadiv">
+            {% for tolvuver in answer.tolvuverin %}
+              <div class="hamainner">
+                <h4 class="answerp">{{ tolvuver.name }}</h4>
+                <a href="{{ '/?question=hvar+' + tolvuver.building }}">Staðsetning</a>
+                <div class="break"></div>
+                <a href="{{ '/?question=hvenær+' + tolvuver.building }}">Opnunartímar</a>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% if answer.radgjof %}
+          <div class="answerblock">
+            <h3 class="answerhead">{{ answer.head }}</h3>
+            <p class="answerp">Staðsetning: {{ answer.address }}</p>
+            <p class="answerp">Opnunartímar: {{ answer.opening }} alla virka daga</p>
+            <p class="answerp">Sími: {{ answer.phone }}</p>
+            <p class="answerp">Netföng: {{ answer.email }}</p>
+            <a href="{{ answer.url }}">Vefsíða</a>
+          </div>
+        {% endif %}
+        {% if answer.nemendathjon %}
+          <div class="answerblock">
+            <h3 class="answerhead">{{ answer.head }}</h3>
+            <p class="answerp">Sími: {{ answer.phone }}</p>
+            <p class="answerp">Netföng: {{ answer.email }}</p>
+            <a href="{{ answer.url }}">Vefsíða</a>
+            <div class="break"></div>
+            <a href="{{ '/?question=hvar+' + answer.building }}">Staðsetning</a>
+            <div class="break"></div>
+            <a href="{{ '/?question=hvenær+' + answer.building }}">Opnunartímar</a>
+          </div>
+        {% endif %}
+        {% if answer.nemendathjon2 %}
+          <div class="answerblock">
+            <h3 class="answerhead">Nemendaþjónustur:</h3>
+            <a href="{{ '/?question=hvs' }}">Heilbrigðisvísindasvið</a>
+            <div class="break"></div>
+            <a href="{{ '/?question=hugs' }}">Hugvísindasvið</a>
+            <div class="break"></div>
+            <a href="{{ '/?question=fvs' }}">Félagsvísindasvið</a>
+            <div class="break"></div>
+            <a href="{{ '/?question=mvs' }}">Menntavísindasvið</a>
+            <div class="break"></div>
+            <a href="{{ '/?question=von' }}">Verkfræði- og Náttúruvísindasvið</a>
+            <div class="break"></div>
+            
+            
+          </div>
+        {% endif %}
+        {% if answer.stjorn %}
+          <div class="answerblock">
+            <h3 class="answerhead">{{ answer.role }} Nörd mun vera</h3>
+            <p class="answerp">{{ answer.name }}</p>  
+          </div>
+        {% endif %}
+        {% if answer.stjorn2 %}
+          <div class="answerblock">
+            <h3 class="answerhead">Stjórn nörd skipar:</h3>
+            {% for member in answer.team %}
+              <div>
+                <h4>{{ member.role }}:</h4>
+                <p class="answerp">{{ member.name }}</p>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% if answer.nothing %}
+          <p>{{ answer.head }}</p>
+        {% endif %}
+        {% if answer.nordmedia %}
+          <div class="answerblock">
+            <h3 class="answerhead">{{ answer.media }} Nörd: </h3>
+            <a href="{{ answer.link }}">Hlekkur</a>  
+          </div>
+        {% endif %}
+        {% if answer.nordmedialist %}
+          <div class="answerblock">
+            <h3 class="answerhead">Samfélagsmiðlar Nörd:</h3>
+            {% for media in answer.medias %}
+              {% if media.media != 'fésbók' and media.media != 'insta' %}
+              <div>
+                <h4>{{ media.media }}:</h4>
+                <a href="{{ media.link }}">Hlekkur</a>  
+              </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
         {% if answer.nothing %}
           <p>{{ answer.head }}</p>
         {% endif %}
@@ -88,6 +181,7 @@
         {% if lemmas != "" %}
         <p class="lemmas">Lemmaðar tokens: {{ lemmas }}</p>
         {% endif %}
+        {{ answer }}
       </div>
     </div>
   </body>
